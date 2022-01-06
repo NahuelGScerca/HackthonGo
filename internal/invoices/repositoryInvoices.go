@@ -8,7 +8,7 @@ import (
 )
 
 type Repository interface {
-	Get(ctx context.Context, id int) (models.Customers, error)
+	Get(ctx context.Context, id int) (models.Invoices, error)
 }
 
 type repository struct {
@@ -21,13 +21,13 @@ func NewRepository(db *sql.DB) Repository {
 	}
 }
 
-func (r *repository) Get(ctx context.Context, id int) (models.Customers, error) {
+func (r *repository) Get(ctx context.Context, id int) (models.Invoices, error) {
 	query := "SELECT * FROM invoices WHERE id = ?;"
 	row := r.db.QueryRow(query, id)
-	b := models.Customers{}
-	err := row.Scan(&b.ID, &b.LastName, &b.FirstName, &b.Condition)
+	b := models.Invoices{}
+	err := row.Scan(&b.ID, &b.Datetime, &b.IdCustomer, &b.Total)
 	if err != nil {
-		return models.Customers{}, err
+		return models.Invoices{}, err
 	}
 
 	return b, nil

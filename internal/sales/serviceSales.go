@@ -21,9 +21,9 @@ func NewService(repo Repository) Service {
 }
 
 func (serv *service) Get(ctx context.Context, id int) (models.Sales, error) {
-	customer, err := serv.repository.Get(ctx, id)
+	sale, err := serv.repository.Get(ctx, id)
 	if err != nil {
 		return models.Sales{}, err
 	}
-	return customer, nil
+	return sale, nil
 }

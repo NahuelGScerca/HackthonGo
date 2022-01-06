@@ -25,7 +25,7 @@ func (r *repository) Get(ctx context.Context, id int) (models.Sales, error) {
 	query := "SELECT * FROM sales WHERE id = ?;"
 	row := r.db.QueryRow(query, id)
 	b := models.Sales{}
-	err := row.Scan(&b.ID, &b.LastName, &b.FirstName, &b.Condition)
+	err := row.Scan(&b.ID, &b.Idinvoice, &b.Idproduct, &b.Quantity)
 	if err != nil {
 		return models.Sales{}, err
 	}
