@@ -3,13 +3,14 @@ package products
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/NahuelGScerca/HackthonGo/internal/models"
 )
 
 type Repository interface {
 	Get(ctx context.Context, id int) (models.Products, error)
-	ImportData(ctx context.Context, prodToAdd []models.Products) ([]models.Products, error)
+	Store(ctx context.Context, entidad models.Products) error
 }
 
 type repository struct {
@@ -34,22 +35,23 @@ func (r *repository) Get(ctx context.Context, id int) (models.Products, error) {
 	return b, nil
 }
 
-func (r *repository) ImportData(ctx context.Context, prodToAdd []models.Products) ([]models.Products, error) {
-	// query := "INSERT INTO products(description,price) VALUES (?,?,?)"
-	// stmt, err := r.db.Prepare(query)
-	// if err != nil {
-	// 	return 0, err
-	// }
+func (r *repository) Store(ctx context.Context, entidad models.Products) error {
+	// fmt.Println("ENTIDAD:  ", entidad)
+	// return nil
+	query := "INSERT INTO products(id,description,price) VALUES (?,?,?)"
+	stmt, err := r.db.Prepare(query)
+	if err != nil {
+		return err
+	}
 
-	// res, err := stmt.Exec(&b.CardNumberID, &b.FirstName, &b.LastName)
-	// if err != nil {
-	// 	return 0, err
-	// }
+	res, err := stmt.Exec(&entidad.ID, &entidad.Description, &entidad.Price)
+	if err != nil {
+		return err
+	}
 
-	// id, err := res.LastInsertId()
-	// if err != nil {
-	// 	return 0, err
-	// }
+	if num, err := res.RowsAffected(); num > 0 && err == nil {
+		return nil
+	}
 
-	return nil, nil
+	return fmt.Errorf("Error insert")
 }

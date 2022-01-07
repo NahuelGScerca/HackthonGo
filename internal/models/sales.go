@@ -2,7 +2,7 @@ package models
 
 type Sales struct {
 	ID        int
-	Idproduct int
-	Idinvoice int
+	IdProduct int
+	IdInvoice int
 	Quantity  float64
 }
