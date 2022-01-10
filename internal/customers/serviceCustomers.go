@@ -35,7 +35,7 @@ func (serv *service) Get(ctx context.Context, id int) (models.Customers, error) 
 
 func (serv *service) ExportData(ctx context.Context) error {
 
-	data, err := utils.ReadData("products")
+	data, err := utils.ReadData("customers")
 
 	if err != nil {
 		fmt.Println("ERROR")
@@ -43,17 +43,15 @@ func (serv *service) ExportData(ctx context.Context) error {
 
 	for _, sale := range data {
 		parseData := strings.Split(sale, "#$%#")
-
 		idParsed, _ := strconv.Atoi(parseData[0])
-		priceParsed, _ := strconv.ParseFloat(parseData[2], 64)
-
-		productsToSend := models.Products{
-			ID:          idParsed,
-			Description: parseData[1],
-			Price:       priceParsed,
+		customerToSend := models.Customers{
+			ID:             idParsed,
+			LastName:       parseData[1],
+			FirstName:      parseData[2],
+			ConditionState: parseData[3],
 		}
 
-		err := serv.repository.Store(context.Background(), productsToSend)
+		err := serv.repository.Store(context.Background(), customerToSend)
 		if err != nil {
 			fmt.Println(err)
 			return err

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/NahuelGScerca/HackthonGo/internal/customers"
+	"github.com/NahuelGScerca/HackthonGo/internal/sales"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -24,9 +24,9 @@ func main() {
 	log.Println("Database Configured")
 
 	//SALES
-	// repoSales := sales.NewRepository(db)
-	// serviceSales := sales.NewService(repoSales)
-	// serviceSales.ExportData(context.Background())
+	repoSales := sales.NewRepository(db)
+	serviceSales := sales.NewService(repoSales)
+	serviceSales.ExportData(context.Background())
 
 	//PRODUCTS
 	// repoProducts := products.NewRepository(db)
@@ -34,7 +34,12 @@ func main() {
 	// serviceProducts.ExportData(context.Background())
 
 	//CUSTOMER
-	repoCustomer := customers.NewRepository(db)
-	serviceCustomer := customers.NewService(repoCustomer)
-	serviceCustomer.ExportData(context.Background())
+	// repoCustomer := customers.NewRepository(db)
+	// serviceCustomer := customers.NewService(repoCustomer)
+	// serviceCustomer.ExportData(context.Background())
+
+	//INVOICES
+	// repoInvoices := invoices.NewRepository(db)
+	// serviceInvoices := invoices.NewService(repoInvoices)
+	// serviceInvoices.ExportData(context.Background())
 }
